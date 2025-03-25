@@ -5,6 +5,7 @@ import com.corhuila.backend_EasyPark.models.repository.IAdminRepository;
 import com.corhuila.backend_EasyPark.requests.LoginAdminRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -17,6 +18,11 @@ public class AdminService {
 
     @Autowired
     IAdminRepository adminRepository;
+
+    @Transactional(readOnly = true)
+    public Admin findById(String email){
+        return adminRepository.findById(email).orElse(null);
+    }
 
     public Admin addAdmin(Admin admin){
         admin.setPassword(hashContrasenia(admin.getPassword()));

@@ -1,11 +1,13 @@
 package com.corhuila.backend_EasyPark.models.service;
 
+import com.corhuila.backend_EasyPark.models.entity.Tarifa;
 import com.corhuila.backend_EasyPark.models.entity.Users;
 import com.corhuila.backend_EasyPark.models.repository.IUsersRepository;
 import com.corhuila.backend_EasyPark.requests.LoginRequest;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -18,6 +20,11 @@ public class UsersService {
 
     @Autowired
     IUsersRepository usersRepository;
+
+    @Transactional(readOnly = true)
+    public Users findById(String email){
+        return usersRepository.findById(email).orElse(null);
+    }
 
     public Users addUser(Users user){
         user.setPassword(hashContrasenia(user.getPassword()));
