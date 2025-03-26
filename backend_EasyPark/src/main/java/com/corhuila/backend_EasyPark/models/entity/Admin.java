@@ -1,5 +1,6 @@
 package com.corhuila.backend_EasyPark.models.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -25,6 +26,9 @@ public class Admin {
 
     private String password;
 
+    private String telefono;
+
+
     public String getEmail() {
         return email;
     }
@@ -47,5 +51,13 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

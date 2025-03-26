@@ -1,5 +1,6 @@
-INSERT INTO users (name, email, password) VALUES ("Oscar", "ogsierra@gmail.com", "12345")
-INSERT INTO users (name, email, password) VALUES ("Pepe", "pepe@gmail.com", "123456")
+INSERT INTO users (name, email, password, telefono) VALUES ("Oscar", "ogsierra@gmail.com", "12345", "3125796966")
+INSERT INTO users (name, email, password, telefono) VALUES ("Pepe", "pepe@gmail.com", "123456", "311457812454")
+INSERT INTO admin (name, email, password, telefono) VALUES ("Admin", "admin@gmail.com", "Hola", "31111111")
 INSERT INTO tarifa (precio, fecha, tipo_vehiculo, lapso) VALUES (1000, "2025-03-18", "Camioneta", "1")
 INSERT INTO vehiculo (placa, tipo_vehiculo, user_id) VALUES ("DUK-608", "Camioneta", "ogsierra@gmail.com")
 INSERT INTO pago (entrada, salida, tarifa_id, vehiculo_id) VALUES ("2025-03-18 08:00:00", "2025-03-18 12:00:00", 1, 1)
