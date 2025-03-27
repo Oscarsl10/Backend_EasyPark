@@ -2,6 +2,7 @@ package com.corhuila.backend_EasyPark.models.service;
 
 import com.corhuila.backend_EasyPark.models.entity.Tarifa;
 import com.corhuila.backend_EasyPark.models.entity.Users;
+import com.corhuila.backend_EasyPark.models.entity.Vehiculo;
 import com.corhuila.backend_EasyPark.models.repository.IUsersRepository;
 import com.corhuila.backend_EasyPark.requests.LoginRequest;
 import org.apache.catalina.User;
@@ -63,5 +64,10 @@ public class UsersService {
         }
 
         return true;
+    }
+
+    @Transactional
+    public Users save(Users user){
+        return usersRepository.save(user);
     }
 }

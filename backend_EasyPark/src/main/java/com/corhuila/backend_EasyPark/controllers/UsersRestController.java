@@ -2,6 +2,7 @@ package com.corhuila.backend_EasyPark.controllers;
 
 import com.corhuila.backend_EasyPark.models.entity.Admin;
 import com.corhuila.backend_EasyPark.models.entity.Users;
+import com.corhuila.backend_EasyPark.models.entity.Vehiculo;
 import com.corhuila.backend_EasyPark.models.repository.IAdminRepository;
 import com.corhuila.backend_EasyPark.models.service.UsersService;
 import com.corhuila.backend_EasyPark.requests.LoginRequest;
@@ -26,7 +27,7 @@ public class UsersRestController {
 
     @PostMapping("/addUser")
     public ResponseEntity<?> addUser(@RequestBody Users user) {
-        // Validación para no permitir el uso del correo de un administrador
+        // Validación para no permitir el uso del correo existente y de un administrador
         Optional<Admin> adminExistente = adminRepository.findById(user.getEmail());
         if (adminExistente.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("ADMIN_EMAIL");
@@ -54,5 +55,21 @@ public class UsersRestController {
     public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
         boolean exists = usersService.existsByEmail(email);
         return ResponseEntity.ok(exists);
+    }
+
+    @PutMapping("/user/{email}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Users update(@RequestBody Users users, @PathVariable String email){
+        Users userActual = usersService.findById(email);
+        userActual.setEmail(users.getEmail());
+        userActual.setFull_name(users.getFull_name());
+        userActual.setTelefono(users.getTelefono());
+
+        // Verifica si se envió una nueva contraseña antes de encriptarla
+        if (users.getPassword() != null && !users.getPassword().isEmpty()) {
+            userActual.setPassword(usersService.hashContrasenia(users.getPassword()));
+        }
+
+        return usersService.save(userActual);
     }
 }

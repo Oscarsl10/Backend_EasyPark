@@ -26,7 +26,7 @@ public class AdminRestController {
 
     @PostMapping("/addAdmin")
     public ResponseEntity<?> addAdmin(@RequestBody Admin admin){
-        // Validación para no permitir el uso del correo de un usuario
+        // Validación para no permitir el uso de un correo existente y de un usuario
         Optional<Users> usersExistente = usersRepository.findById(admin.getEmail());
         if (usersExistente.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("USER_EMAIL");
@@ -55,5 +55,21 @@ public class AdminRestController {
     public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
         boolean exists = adminService.existsAdminByEmail(email);
         return ResponseEntity.ok(exists);
+    }
+
+    @PutMapping("/admin/{email}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Admin update(@RequestBody Admin admin, @PathVariable String email){
+        Admin adminActual = adminService.findById(email);
+        adminActual.setEmail(admin.getEmail());
+        adminActual.setFull_name(admin.getFull_name());
+        adminActual.setTelefono(admin.getTelefono());
+
+        // Verifica si se envió una nueva contraseña antes de encriptarla
+        if (admin.getPassword() != null && !admin.getPassword().isEmpty()) {
+            adminActual.setPassword(adminService.hashContrasenia(admin.getPassword()));
+        }
+
+        return adminService.save(adminActual);
     }
 }

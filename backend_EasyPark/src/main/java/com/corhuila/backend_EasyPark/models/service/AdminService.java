@@ -1,6 +1,7 @@
 package com.corhuila.backend_EasyPark.models.service;
 
 import com.corhuila.backend_EasyPark.models.entity.Admin;
+import com.corhuila.backend_EasyPark.models.entity.Users;
 import com.corhuila.backend_EasyPark.models.repository.IAdminRepository;
 import com.corhuila.backend_EasyPark.requests.LoginAdminRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,10 @@ public class AdminService {
         }
 
         return true;
+    }
+
+    @Transactional
+    public Admin save(Admin admin){
+        return adminRepository.save(admin);
     }
 }
