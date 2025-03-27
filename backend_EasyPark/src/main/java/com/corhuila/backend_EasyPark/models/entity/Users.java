@@ -13,20 +13,22 @@ public class Users {
 
     }
 
-    public Users(String email, String name, String password){
+    public Users(String email, String full_name, String password){
         super();
         this.email = email;
-        this.name = name;
+        this.full_name = full_name;
         this.password = password;
     }
 
     @Id
     private String email;
 
-    private String name;
+    @Column(length = 50)
+    private String full_name;
 
     private String password;
 
+    @Column(length = 15)
     private String telefono;
 
     public String getEmail() {
@@ -37,12 +39,12 @@ public class Users {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public String getPassword() {
