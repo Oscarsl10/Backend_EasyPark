@@ -21,6 +21,10 @@ public class UsersService {
     @Autowired
     IUsersRepository usersRepository;
 
+    public boolean existsByEmail(String email) {
+        return usersRepository.existsByEmail(email);
+    }
+
     @Transactional(readOnly = true)
     public Users findById(String email){
         return usersRepository.findById(email).orElse(null);
@@ -59,9 +63,5 @@ public class UsersService {
         }
 
         return true;
-    }
-
-    public boolean existsByEmail(String email) {
-        return usersRepository.existsByEmail(email);
     }
 }

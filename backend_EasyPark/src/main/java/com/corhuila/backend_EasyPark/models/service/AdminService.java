@@ -19,12 +19,20 @@ public class AdminService {
     @Autowired
     IAdminRepository adminRepository;
 
+    public boolean existsAdminByEmail(String email) {
+        return adminRepository.existsAdminByEmail(email);
+    }
+
     @Transactional(readOnly = true)
     public Admin findById(String email){
         return adminRepository.findById(email).orElse(null);
     }
 
     public Admin addAdmin(Admin admin){
+        if (existsAdminByEmail(admin.getEmail())) { // Primero verifica si el email ya existe
+            throw new RuntimeException("El correo ya está registrado.");
+        }
+
         admin.setPassword(hashContrasenia(admin.getPassword()));
         return adminRepository.save(admin);
     }
