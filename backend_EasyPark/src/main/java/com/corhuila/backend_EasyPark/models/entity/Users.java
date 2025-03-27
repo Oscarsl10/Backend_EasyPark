@@ -23,12 +23,12 @@ public class Users {
     @Id
     private String email;
 
-    @Column(length = 50)
+    @Column(length = 100)
     private String full_name;
 
     private String password;
 
-    @Column(length = 15)
+    @Column(length = 10)
     private String telefono;
 
     public String getEmail() {

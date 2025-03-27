@@ -26,7 +26,11 @@ public class UsersService {
         return usersRepository.findById(email).orElse(null);
     }
 
-    public Users addUser(Users user){
+    public Users addUser(Users user) {
+        if (existsByEmail(user.getEmail())) { // Primero verifica si el email ya existe
+            throw new RuntimeException("El correo ya está registrado.");
+        }
+
         user.setPassword(hashContrasenia(user.getPassword()));
         return usersRepository.save(user);
     }
@@ -55,5 +59,9 @@ public class UsersService {
         }
 
         return true;
+    }
+
+    public boolean existsByEmail(String email) {
+        return usersRepository.existsByEmail(email);
     }
 }

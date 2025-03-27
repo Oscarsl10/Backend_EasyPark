@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IUsersRepository extends JpaRepository <Users, String> {
-
-
+    boolean existsByEmail(String email); // Método para verificar si el correo existe
 }
