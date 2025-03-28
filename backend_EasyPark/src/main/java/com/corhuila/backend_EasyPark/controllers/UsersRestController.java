@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -61,7 +63,6 @@ public class UsersRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public Users update(@RequestBody Users users, @PathVariable String email){
         Users userActual = usersService.findById(email);
-        userActual.setEmail(users.getEmail());
         userActual.setFull_name(users.getFull_name());
         userActual.setTelefono(users.getTelefono());
 
@@ -71,5 +72,19 @@ public class UsersRestController {
         }
 
         return usersService.save(userActual);
+    }
+
+    // Endpoint para recuperar la contraseña
+    @PostMapping("/recuperar-contrasenia")
+    public ResponseEntity<Map<String, String>> recuperarContrasenia(@RequestParam String email) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            usersService.recuperarContrasenia(email);
+            response.put("message", "Se ha enviado una nueva contraseña a tu correo.");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 }

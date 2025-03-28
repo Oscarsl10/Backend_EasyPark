@@ -61,7 +61,6 @@ public class AdminRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public Admin update(@RequestBody Admin admin, @PathVariable String email){
         Admin adminActual = adminService.findById(email);
-        adminActual.setEmail(admin.getEmail());
         adminActual.setFull_name(admin.getFull_name());
         adminActual.setTelefono(admin.getTelefono());
 
