@@ -1,6 +1,7 @@
 package com.corhuila.backend_EasyPark.controllers;
 
 import com.corhuila.backend_EasyPark.models.entity.Admin;
+import com.corhuila.backend_EasyPark.models.entity.Factura;
 import com.corhuila.backend_EasyPark.models.entity.Users;
 import com.corhuila.backend_EasyPark.models.repository.IAdminRepository;
 import com.corhuila.backend_EasyPark.models.repository.IUsersRepository;
@@ -12,17 +13,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 
 @RestController
+@RequestMapping("/api")
 public class AdminRestController {
 
     @Autowired
     AdminService adminService;
     @Autowired
     IUsersRepository usersRepository;
+
+    @GetMapping("/admin")
+    public List<Admin> index(){
+        return adminService.findAll();
+    }
 
     @PostMapping("/addAdmin")
     public ResponseEntity<?> addAdmin(@RequestBody Admin admin){

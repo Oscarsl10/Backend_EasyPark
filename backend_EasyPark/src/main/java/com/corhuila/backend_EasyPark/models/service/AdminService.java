@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,5 +68,11 @@ public class AdminService {
     @Transactional
     public Admin save(Admin admin){
         return adminRepository.save(admin);
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<Admin> findAll(){
+        return (List<Admin>) adminRepository.findAll();
     }
 }

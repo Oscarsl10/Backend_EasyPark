@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -123,5 +124,10 @@ public class UsersService {
 
     public boolean verificarContrasenia(String rawPassword, String hashedPassword) {
         return hashedPassword.equals(hashContrasenia(rawPassword));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Users> findAll(){
+        return (List<Users>) usersRepository.findAll();
     }
 }
