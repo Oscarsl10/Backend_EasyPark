@@ -60,18 +60,39 @@ public class UsersRestController {
     }
 
     @PutMapping("/user/{email}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Users update(@RequestBody Users users, @PathVariable String email){
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> update(@RequestBody Map<String, String> requestData, @PathVariable String email) {
         Users userActual = usersService.findById(email);
-        userActual.setFull_name(users.getFull_name());
-        userActual.setTelefono(users.getTelefono());
 
-        // Verifica si se envió una nueva contraseña antes de encriptarla
-        if (users.getPassword() != null && !users.getPassword().isEmpty()) {
-            userActual.setPassword(usersService.hashContrasenia(users.getPassword()));
+        if (userActual == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
         }
 
-        return usersService.save(userActual);
+        userActual.setFull_name(requestData.get("full_name"));
+        userActual.setTelefono(requestData.get("telefono"));
+
+        // Manejo de la actualización de la contraseña
+        String oldPassword = requestData.get("oldPassword");
+        String newPassword = requestData.get("newPassword");
+
+        if (oldPassword != null && newPassword != null && !newPassword.isEmpty()) {
+            // Verificar si oldPassword es correcta
+            if (!usersService.verificarContrasenia(oldPassword, userActual.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("La contraseña actual es incorrecta.");
+            }
+
+            // Verificar que la nueva contraseña no sea la misma que la actual
+            String newPasswordHashed = usersService.hashContrasenia(newPassword);
+            if (newPasswordHashed.equals(userActual.getPassword())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La nueva contraseña no puede ser igual a la actual.");
+            }
+
+            // Encriptar la nueva contraseña y guardarla
+            userActual.setPassword(usersService.hashContrasenia(newPassword));
+        }
+
+        Users usuarioActualizado = usersService.save(userActual);
+        return ResponseEntity.ok(usuarioActualizado);
     }
 
     // Endpoint para recuperar la contraseña

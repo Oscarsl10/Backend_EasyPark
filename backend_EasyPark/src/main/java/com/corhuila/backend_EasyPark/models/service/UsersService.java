@@ -120,4 +120,8 @@ public class UsersService {
     public Users save(Users user){
         return usersRepository.save(user);
     }
+
+    public boolean verificarContrasenia(String rawPassword, String hashedPassword) {
+        return hashedPassword.equals(hashContrasenia(rawPassword));
+    }
 }
