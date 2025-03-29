@@ -29,7 +29,7 @@ public class UsersRestController {
     @Autowired
     IAdminRepository adminRepository; // Inyectamos el repositorio de admin
 
-    @GetMapping("/users")
+    @GetMapping("/user")
     public List<Users> index(){
         return usersService.findAll();
     }
