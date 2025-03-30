@@ -33,8 +33,13 @@ public class AdminRestController {
     }
 
     @PostMapping("/addAdmin")
-    public ResponseEntity<?> addAdmin(@RequestBody Admin admin){
-        // Validación para no permitir el uso de un correo existente y de un usuario
+    public ResponseEntity<?> addAdmin(@RequestBody Admin admin, @RequestParam String authorizedEmail) {
+        // Verifica si el usuario que está intentando registrar es "admin@gmail.com"
+        if (!"admin@gmail.com".equals(authorizedEmail)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No tienes permisos para esta acción.");
+        }
+
+        // Validación para no permitir el uso de un correo existente en Users
         Optional<Users> usersExistente = usersRepository.findById(admin.getEmail());
         if (usersExistente.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("USER_EMAIL");
