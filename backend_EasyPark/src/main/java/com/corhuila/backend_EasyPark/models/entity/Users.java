@@ -1,9 +1,8 @@
 package com.corhuila.backend_EasyPark.models.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -30,6 +29,35 @@ public class Users {
 
     @Column(length = 10)
     private String telefono;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_At")
+    private Date created_At;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_At")
+    private Date update_At;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "deleted_At")
+    private Date deleted_At;
+
+    @PrePersist
+    protected void onCreate() {
+        Date now = new Date();
+        created_At = now;
+        update_At = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        update_At = new Date();
+    }
+
+    @PreRemove
+    protected void onDelete() {
+        deleted_At = new Date();
+    }
 
     public String getEmail() {
         return email;
@@ -61,5 +89,29 @@ public class Users {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Date getCreated_At() {
+        return created_At;
+    }
+
+    public void setCreated_At(Date created_At) {
+        this.created_At = created_At;
+    }
+
+    public Date getUpdate_At() {
+        return update_At;
+    }
+
+    public void setUpdate_At(Date update_At) {
+        this.update_At = update_At;
+    }
+
+    public Date getDeleted_At() {
+        return deleted_At;
+    }
+
+    public void setDeleted_At(Date deleted_At) {
+        this.deleted_At = deleted_At;
     }
 }
