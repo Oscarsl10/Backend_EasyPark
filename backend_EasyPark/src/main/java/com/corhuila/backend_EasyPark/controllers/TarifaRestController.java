@@ -41,6 +41,7 @@ public class TarifaRestController {
         tarifaActual.setPrecio(tarifa.getPrecio());
         tarifaActual.setFecha(tarifa.getFecha());
         tarifaActual.setDescripcion(tarifa.getDescripcion());
+        tarifaActual.setNombreTarifa(tarifa.getNombreTarifa());
         return tarifaService.save(tarifaActual);
     }
 

@@ -21,6 +21,8 @@ public class Tarifa implements Serializable {
     private String tipoVehiculo;
     @Column(length = 350)
     private String descripcion;
+    @Column(length = 300)
+    private String nombreTarifa;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -115,5 +117,13 @@ public class Tarifa implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getNombreTarifa() {
+        return nombreTarifa;
+    }
+
+    public void setNombreTarifa(String nombreTarifa) {
+        this.nombreTarifa = nombreTarifa;
     }
 }
