@@ -39,7 +39,6 @@ public class TarifaRestController {
         Tarifa tarifaActual = tarifaService.findById(id);
         tarifaActual.setTipoVehiculo(tarifa.getTipoVehiculo());
         tarifaActual.setPrecio(tarifa.getPrecio());
-        tarifaActual.setLapso(tarifa.getLapso());
         tarifaActual.setFecha(tarifa.getFecha());
         return tarifaService.save(tarifaActual);
     }

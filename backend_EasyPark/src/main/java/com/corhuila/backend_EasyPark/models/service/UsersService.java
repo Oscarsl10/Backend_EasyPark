@@ -1,11 +1,8 @@
 package com.corhuila.backend_EasyPark.models.service;
 
-import com.corhuila.backend_EasyPark.models.entity.Tarifa;
 import com.corhuila.backend_EasyPark.models.entity.Users;
-import com.corhuila.backend_EasyPark.models.entity.Vehiculo;
 import com.corhuila.backend_EasyPark.models.repository.IUsersRepository;
 import com.corhuila.backend_EasyPark.requests.LoginRequest;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -66,7 +63,7 @@ public class UsersService {
     private void enviarCorreo(String destinatario, String nuevaContrasenia) {
         SimpleMailMessage mensaje = new SimpleMailMessage();
         mensaje.setTo(destinatario);
-        mensaje.setSubject("Recuperación de contraseña");
+        mensaje.setSubject("Recuperación de contraseña EasyPark");
         mensaje.setText("Tu nueva contraseña temporal es: " + nuevaContrasenia +
                 "\nPor favor, inicia sesión y cámbiala lo antes posible.");
 
