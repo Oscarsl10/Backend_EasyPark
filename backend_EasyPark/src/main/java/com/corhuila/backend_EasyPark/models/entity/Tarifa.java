@@ -19,6 +19,8 @@ public class Tarifa implements Serializable {
     private String fecha;
     @Column(length = (100), nullable = false)
     private String tipoVehiculo;
+    @Column(length = 350)
+    private String descripcion;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -105,5 +107,13 @@ public class Tarifa implements Serializable {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }
