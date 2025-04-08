@@ -1,5 +1,6 @@
 package com.corhuila.backend_EasyPark.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -17,6 +18,7 @@ public class RegistroVehiculo {
     @Column(length = (100), nullable = false)
     private String tipoVehiculo;
     @Column(name = "Entrada")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "America/Bogota")
     @Temporal(TemporalType.TIMESTAMP)
     private Date entrada;
 
