@@ -20,6 +20,10 @@ public class RegistroVehiculo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date entrada;
 
+    @ManyToOne
+    @JoinColumn(name = "tarifa_id", nullable = false)
+    private Tarifa tarifa;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_At")
     private Date created_At;
@@ -103,5 +107,13 @@ public class RegistroVehiculo {
 
     public void setEntrada(Date entrada) {
         this.entrada = entrada;
+    }
+
+    public Tarifa getTarifa() {
+        return tarifa;
+    }
+
+    public void setTarifa(Tarifa tarifa) {
+        this.tarifa = tarifa;
     }
 }

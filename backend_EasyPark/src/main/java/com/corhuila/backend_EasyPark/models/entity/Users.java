@@ -22,7 +22,7 @@ public class Users {
     @Id
     private String email;
 
-    @Column(length = 100)
+    @Column(length = 250)
     private String full_name;
 
     private String password;
