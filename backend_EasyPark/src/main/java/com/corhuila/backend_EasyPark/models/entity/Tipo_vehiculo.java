@@ -6,23 +6,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "tarifa")
-public class Tarifa implements Serializable {
+@Table(name = "tipo_vehiculo")
+public class Tipo_vehiculo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = (100), nullable = false)
-    private Double precio;
-    @Column(length = (100), nullable = false)
-    private String fecha;
-    @Column(length = 300)
-    private String nombreTarifa;
-
-    @ManyToOne
-    @JoinColumn(name = "tipo_vehiculo_id", nullable = false)
-    private Tipo_vehiculo tipo_vehiculo;
+    @Column(length = 250)
+    private String tipo_vehiculo;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_At")
@@ -61,20 +53,12 @@ public class Tarifa implements Serializable {
         this.id = id;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public String getTipo_vehiculo() {
+        return tipo_vehiculo;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setTipo_vehiculo(String tipo_vehiculo) {
+        this.tipo_vehiculo = tipo_vehiculo;
     }
 
     public Date getCreated_At() {
@@ -99,21 +83,5 @@ public class Tarifa implements Serializable {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
-    }
-
-    public String getNombreTarifa() {
-        return nombreTarifa;
-    }
-
-    public void setNombreTarifa(String nombreTarifa) {
-        this.nombreTarifa = nombreTarifa;
-    }
-
-    public Tipo_vehiculo getTipo_vehiculo() {
-        return tipo_vehiculo;
-    }
-
-    public void setTipo_vehiculo(Tipo_vehiculo tipo_vehiculo) {
-        this.tipo_vehiculo = tipo_vehiculo;
     }
 }

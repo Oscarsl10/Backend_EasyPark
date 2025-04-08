@@ -37,11 +37,10 @@ public class TarifaRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public Tarifa update(@RequestBody Tarifa tarifa, @PathVariable Long id){
         Tarifa tarifaActual = tarifaService.findById(id);
-        tarifaActual.setTipoVehiculo(tarifa.getTipoVehiculo());
         tarifaActual.setPrecio(tarifa.getPrecio());
         tarifaActual.setFecha(tarifa.getFecha());
-        tarifaActual.setDescripcion(tarifa.getDescripcion());
         tarifaActual.setNombreTarifa(tarifa.getNombreTarifa());
+        tarifaActual.setTipo_vehiculo(tarifa.getTipo_vehiculo());
         return tarifaService.save(tarifaActual);
     }
 
