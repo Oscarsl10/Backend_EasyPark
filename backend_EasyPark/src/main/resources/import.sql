@@ -4,5 +4,6 @@ INSERT INTO admin (full_name, email, password, telefono) VALUES ("Admin", "admin
 INSERT INTO tipo_vehiculo (tipo_vehiculo) VALUES ("Carro")
 INSERT INTO tarifa (nombre_tarifa, precio, fecha, tipo_vehiculo_id) VALUES ("Prueba tarifa 1", 1000, "2025-03-18", 1)
 INSERT INTO vehiculo (placa, tipo_vehiculo, user_id) VALUES ("DUK-608", "Camioneta", "ogsierra@gmail.com")
-INSERT INTO pago (entrada, salida, tarifa_id, vehiculo_id) VALUES ("2025-03-18 08:00:00", "2025-03-18 12:00:00", 1, 1)
+INSERT INTO registro_vehiculo (placa, tipo_vehiculo, entrada) VALUES ("DUK-608", "Camioneta", "2025-04-08 16:31:00")
+INSERT INTO pago (salida, tarifa_id, registro_vehiculo_id) VALUES ("2025-04-08 20:00:00", 1, 1)
 INSERT INTO factura (numero_factura	, fecha_emision, pago_id, user_id) VALUES (135, '2025-03-18', 1, "ogsierra@gmail.com");

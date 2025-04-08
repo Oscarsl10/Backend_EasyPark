@@ -37,9 +37,8 @@ public class PagoRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public Pago update(@RequestBody Pago pago, @PathVariable Long id){
         Pago pagoActual = pagoService.findById(id);
-        pagoActual.setEntrada(pago.getEntrada());
         pagoActual.setSalida(pago.getSalida());
-        pagoActual.setVehiculo(pago.getVehiculo());
+        pagoActual.setRegistroVehiculo(pago.getRegistroVehiculo());
         pagoActual.setTarifa(pago.getTarifa());
         return pagoService.save(pagoActual);
     }

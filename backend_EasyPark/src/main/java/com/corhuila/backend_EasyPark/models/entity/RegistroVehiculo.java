@@ -16,6 +16,9 @@ public class RegistroVehiculo {
     private String placa;
     @Column(length = (100), nullable = false)
     private String tipoVehiculo;
+    @Column(name = "Entrada")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date entrada;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_At")
@@ -92,5 +95,13 @@ public class RegistroVehiculo {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
+    }
+
+    public Date getEntrada() {
+        return entrada;
+    }
+
+    public void setEntrada(Date entrada) {
+        this.entrada = entrada;
     }
 }

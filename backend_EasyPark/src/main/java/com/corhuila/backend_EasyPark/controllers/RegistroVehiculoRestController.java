@@ -40,6 +40,7 @@ public class RegistroVehiculoRestController {
         RegistroVehiculo registroVehiculoActual = registroVehiculoService.findById(id);
         registroVehiculoActual.setPlaca(registroVehiculo.getPlaca());
         registroVehiculoActual.setTipoVehiculo(registroVehiculo.getTipoVehiculo());
+        registroVehiculoActual.setEntrada(registroVehiculo.getEntrada());
         return registroVehiculoService.save(registroVehiculoActual);
     }
 
