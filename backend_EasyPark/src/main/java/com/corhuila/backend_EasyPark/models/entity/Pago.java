@@ -1,5 +1,6 @@
 package com.corhuila.backend_EasyPark.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +17,7 @@ public class Pago implements Serializable {
 
 
     @Column(name = "Salida")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "America/Bogota")
     @Temporal(TemporalType.TIMESTAMP)
     private Date salida;
 
