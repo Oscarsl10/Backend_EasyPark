@@ -21,6 +21,8 @@ public class RegistroVehiculo {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "America/Bogota")
     @Temporal(TemporalType.TIMESTAMP)
     private Date entrada;
+    @Column(name = "status")
+    private Boolean status = true;
 
     @ManyToOne
     @JoinColumn(name = "tarifa_id", nullable = false)
@@ -117,5 +119,13 @@ public class RegistroVehiculo {
 
     public void setTarifa(Tarifa tarifa) {
         this.tarifa = tarifa;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

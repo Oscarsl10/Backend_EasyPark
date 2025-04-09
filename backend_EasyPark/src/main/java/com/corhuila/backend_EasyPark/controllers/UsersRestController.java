@@ -116,4 +116,10 @@ public class UsersRestController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    @DeleteMapping("/user/{email}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String email){
+        usersService.delete(email);
+    }
 }

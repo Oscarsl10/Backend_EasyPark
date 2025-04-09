@@ -23,6 +23,8 @@ public class Pago implements Serializable {
 
     @Column(name = "Valor a Pagar")
     private Double valorAPagar;
+    @Column(name = "status")
+    private Boolean status = true;
 
     @ManyToOne
     @JoinColumn(name = "registro_vehiculo_id", nullable = false)
@@ -156,5 +158,13 @@ public class Pago implements Serializable {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

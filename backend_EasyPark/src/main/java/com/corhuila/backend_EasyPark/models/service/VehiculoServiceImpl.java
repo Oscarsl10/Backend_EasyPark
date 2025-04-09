@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,13 +18,14 @@ public class VehiculoServiceImpl implements IVehiculoService{
     @Override
     @Transactional(readOnly = true)
     public List<Vehiculo> findAll(){
-        return (List<Vehiculo>) vehiculoRepository.findAll();
+        return vehiculoRepository.findByStatusTrue();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Vehiculo findById(Long id){
-        return vehiculoRepository.findById(id).orElse(null);
+        Vehiculo vehiculo = vehiculoRepository.findById(id).orElse(null);
+        return (vehiculo != null && Boolean.TRUE.equals(vehiculo.getStatus())) ? vehiculo : null;
     }
 
     @Override
@@ -35,6 +37,11 @@ public class VehiculoServiceImpl implements IVehiculoService{
     @Override
     @Transactional
     public void delete(Long id){
-        vehiculoRepository.deleteById(id);
+        Vehiculo vehiculo = vehiculoRepository.findById(id).orElse(null);
+        if (vehiculo != null) {
+            vehiculo.setStatus(false);
+            vehiculo.setDeleted_At(new Date());
+            vehiculoRepository.save(vehiculo);
+        }
     }
 }

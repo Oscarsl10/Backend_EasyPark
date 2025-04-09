@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,13 +18,14 @@ public class TarifaServiceImpl implements ITarifaService{
     @Override
     @Transactional(readOnly = true)
     public List<Tarifa> findAll(){
-        return (List<Tarifa>) tarifaRepository.findAll();
+        return tarifaRepository.findByStatusTrue();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Tarifa findById(Long id){
-        return tarifaRepository.findById(id).orElse(null);
+        Tarifa tarifa = tarifaRepository.findById(id).orElse(null);
+        return (tarifa != null && Boolean.TRUE.equals(tarifa.getStatus())) ? tarifa : null;
     }
 
     @Override
@@ -35,6 +37,11 @@ public class TarifaServiceImpl implements ITarifaService{
     @Override
     @Transactional
     public void delete(Long id){
-        tarifaRepository.deleteById(id);
+        Tarifa tarifa = tarifaRepository.findById(id).orElse(null);
+        if (tarifa != null) {
+            tarifa.setStatus(false);
+            tarifa.setDeleted_At(new Date());
+            tarifaRepository.save(tarifa);
+        }
     }
 }

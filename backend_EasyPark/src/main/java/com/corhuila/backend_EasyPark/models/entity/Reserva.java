@@ -26,6 +26,9 @@ public class Reserva {
     @Column(nullable = false)
     private Double precio; // Costo total de la reserva
 
+    @Column(name = "status")
+    private Boolean status = true;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_At")
     private Date created_At;
@@ -149,5 +152,13 @@ public class Reserva {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

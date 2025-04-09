@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,13 +18,14 @@ public class ReservaServiceImpl implements IReservaService{
     @Override
     @Transactional(readOnly = true)
     public List<Reserva> findAll(){
-        return (List<Reserva>) reservaRepository.findAll();
+        return reservaRepository.findByStatusTrue();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Reserva findById(Long id){
-        return reservaRepository.findById(id).orElse(null);
+        Reserva reserva = reservaRepository.findById(id).orElse(null);
+        return (reserva != null && Boolean.TRUE.equals(reserva.getStatus())) ? reserva : null;
     }
 
     @Override
@@ -35,6 +37,11 @@ public class ReservaServiceImpl implements IReservaService{
     @Override
     @Transactional
     public void delete(Long id){
-        reservaRepository.deleteById(id);
+        Reserva reserva = reservaRepository.findById(id).orElse(null);
+        if (reserva != null) {
+            reserva.setStatus(false);
+            reserva.setDeleted_At(new Date());
+            reservaRepository.save(reserva);
+        }
     }
 }

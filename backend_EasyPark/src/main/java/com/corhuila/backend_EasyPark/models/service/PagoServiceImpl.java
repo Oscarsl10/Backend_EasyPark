@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,13 +18,14 @@ public class PagoServiceImpl implements IPagoService{
     @Override
     @Transactional(readOnly = true)
     public List<Pago> findAll(){
-        return (List<Pago>) pagoRepository.findAll();
+        return pagoRepository.findByStatusTrue();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Pago findById(Long id){
-        return pagoRepository.findById(id).orElse(null);
+        Pago pago = pagoRepository.findById(id).orElse(null);
+        return (pago != null && Boolean.TRUE.equals(pago.getStatus())) ? pago : null;
     }
 
     @Override
@@ -35,6 +37,11 @@ public class PagoServiceImpl implements IPagoService{
     @Override
     @Transactional
     public void delete(Long id){
-        pagoRepository.deleteById(id);
+        Pago pago = pagoRepository.findById(id).orElse(null);
+        if (pago != null) {
+            pago.setStatus(false);
+            pago.setDeleted_At(new Date());
+            pagoRepository.save(pago);
+        }
     }
 }

@@ -127,4 +127,9 @@ public class UsersService {
     public List<Users> findAll(){
         return (List<Users>) usersRepository.findAll();
     }
+
+    @Transactional
+    public void delete(String email){
+        usersRepository.deleteById(email);
+    }
 }

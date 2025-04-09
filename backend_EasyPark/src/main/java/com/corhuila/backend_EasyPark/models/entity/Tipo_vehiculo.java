@@ -15,6 +15,8 @@ public class Tipo_vehiculo implements Serializable {
 
     @Column(length = 250)
     private String tipo_vehiculo;
+    @Column(name = "status")
+    private Boolean status = true;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_At")
@@ -83,5 +85,13 @@ public class Tipo_vehiculo implements Serializable {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

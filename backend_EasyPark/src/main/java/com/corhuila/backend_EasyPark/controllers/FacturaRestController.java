@@ -38,7 +38,7 @@ public class FacturaRestController {
     public Factura update(@RequestBody Factura factura, @PathVariable Long id){
         Factura facturaActual = facturaService.findById(id);
         facturaActual.setNumeroFactura(factura.getNumeroFactura());
-        facturaActual.setUsers(factura.getUsers());
+        facturaActual.setRegistroVehiculo(factura.getRegistroVehiculo());
         return facturaService.save(facturaActual);
     }
 

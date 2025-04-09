@@ -75,4 +75,9 @@ public class AdminService {
     public List<Admin> findAll(){
         return (List<Admin>) adminRepository.findAll();
     }
+
+    @Transactional
+    public void delete(String email){
+        adminRepository.deleteById(email);
+    }
 }

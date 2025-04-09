@@ -19,6 +19,8 @@ public class Tarifa implements Serializable {
     private String fecha;
     @Column(length = 300)
     private String nombreTarifa;
+    @Column(name = "status")
+    private Boolean status = true;
 
     @ManyToOne
     @JoinColumn(name = "tipo_vehiculo_id", nullable = false)
@@ -115,5 +117,13 @@ public class Tarifa implements Serializable {
 
     public void setTipo_vehiculo(Tipo_vehiculo tipo_vehiculo) {
         this.tipo_vehiculo = tipo_vehiculo;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

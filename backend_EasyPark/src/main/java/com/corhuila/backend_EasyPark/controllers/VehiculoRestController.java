@@ -40,6 +40,7 @@ public class VehiculoRestController {
         vehiculoActual.setTipoVehiculo(vehiculo.getTipoVehiculo());
         vehiculoActual.setPlaca(vehiculo.getPlaca());
         vehiculoActual.setUsers(vehiculo.getUsers());
+        vehiculoActual.setColor(vehiculo.getColor());
         return vehiculoService.save(vehiculoActual);
     }
 

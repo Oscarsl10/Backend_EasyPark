@@ -17,6 +17,10 @@ public class Vehiculo implements Serializable {
     private String placa;
     @Column(length = (100), nullable = false)
     private String tipoVehiculo;
+    @Column(length = 100, nullable = false)
+    private String color;
+    @Column(name = "status")
+    private Boolean status = true;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_At")
@@ -110,5 +114,21 @@ public class Vehiculo implements Serializable {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

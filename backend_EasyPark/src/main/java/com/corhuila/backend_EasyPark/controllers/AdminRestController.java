@@ -1,12 +1,9 @@
 package com.corhuila.backend_EasyPark.controllers;
 
 import com.corhuila.backend_EasyPark.models.entity.Admin;
-import com.corhuila.backend_EasyPark.models.entity.Factura;
 import com.corhuila.backend_EasyPark.models.entity.Users;
-import com.corhuila.backend_EasyPark.models.repository.IAdminRepository;
 import com.corhuila.backend_EasyPark.models.repository.IUsersRepository;
 import com.corhuila.backend_EasyPark.models.service.AdminService;
-import com.corhuila.backend_EasyPark.models.service.UsersService;
 import com.corhuila.backend_EasyPark.requests.LoginAdminRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,5 +80,11 @@ public class AdminRestController {
         }
 
         return adminService.save(adminActual);
+    }
+
+    @DeleteMapping("/admin/{email}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String email){
+        adminService.delete(email);
     }
 }

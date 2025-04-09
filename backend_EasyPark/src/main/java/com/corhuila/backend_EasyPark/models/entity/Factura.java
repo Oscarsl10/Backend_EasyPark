@@ -22,14 +22,45 @@ public class Factura implements Serializable {
 
     @Column(name = "Total_Pagar")
     private Double total;
+    @Column(name = "status")
+    private Boolean status = true;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "pago_id", nullable = false)
     private Pago pago;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    @OneToOne
+    @JoinColumn(name = "registro_vehiculo_id", nullable = false)
+    private RegistroVehiculo registroVehiculo;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_At")
+    private Date created_At;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_At")
+    private Date update_At;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "deleted_At")
+    private Date deleted_At;
+
+    @PrePersist
+    protected void onCreate() {
+        Date now = new Date();
+        created_At = now;
+        update_At = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        update_At = new Date();
+    }
+
+    @PreRemove
+    protected void onDelete() {
+        deleted_At = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -56,7 +87,7 @@ public class Factura implements Serializable {
     }
 
     public Double getTotal() {
-        return total = pago.calcularValorAPagar() + (pago.calcularValorAPagar() * 0.12);
+        return total = pago.calcularValorAPagar() + (pago.calcularValorAPagar() * 0.16);
     }
 
     public void setTotal(Double total) {
@@ -69,15 +100,46 @@ public class Factura implements Serializable {
 
     public void setPago(Pago pago) {
         this.pago = pago;
-        this.total = pago.calcularValorAPagar() * 0.12; // Actualiza el total al asignar un pago
     }
 
-    public Users getUsers() {
-        return user;
+    public RegistroVehiculo getRegistroVehiculo() {
+        return registroVehiculo;
     }
 
-    public void setUsers(Users user) {
-        this.user = user;
+    public void setRegistroVehiculo(RegistroVehiculo registroVehiculo) {
+        this.registroVehiculo = registroVehiculo;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Date getCreated_At() {
+        return created_At;
+    }
+
+    public void setCreated_At(Date created_At) {
+        this.created_At = created_At;
+    }
+
+    public Date getUpdate_At() {
+        return update_At;
+    }
+
+    public void setUpdate_At(Date update_At) {
+        this.update_At = update_At;
+    }
+
+    public Date getDeleted_At() {
+        return deleted_At;
+    }
+
+    public void setDeleted_At(Date deleted_At) {
+        this.deleted_At = deleted_At;
     }
 }
 
