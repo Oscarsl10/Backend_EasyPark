@@ -25,11 +25,11 @@ public class Factura implements Serializable {
     @Column(name = "status")
     private Boolean status = true;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pago_id", nullable = false)
     private Pago pago;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "registro_vehiculo_id", nullable = false)
     private RegistroVehiculo registroVehiculo;
 

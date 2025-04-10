@@ -4,6 +4,7 @@ import com.corhuila.backend_EasyPark.models.entity.Factura;
 import com.corhuila.backend_EasyPark.models.service.IFacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,21 @@ public class FacturaRestController {
     @GetMapping("/factura/{id}")
     public Factura show(@PathVariable Long id){
         return facturaService.findById(id);
+    }
+
+    @GetMapping("/facturav/{id}")
+    public List<Factura> getByVehiculoId(@PathVariable Long id) {
+        return facturaService.findByRegistroVehiculoId(id);
+    }
+
+    @GetMapping("/factura/pago/{pagoId}")
+    public ResponseEntity<Factura> obtenerFacturaPorPago(@PathVariable Long pagoId) {
+        Factura factura = facturaService.findByPagoId(pagoId);
+        if (factura != null) {
+            return ResponseEntity.ok(factura);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/factura")

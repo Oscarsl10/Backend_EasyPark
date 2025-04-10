@@ -44,4 +44,14 @@ public class FacturaServiceImpl implements IFacturaService{
             facturaRepository.save(factura);
         }
     }
+
+    @Override
+    public List<Factura> findByRegistroVehiculoId(Long id) {
+        return facturaRepository.findByRegistroVehiculoId(id);
+    }
+
+    @Override
+    public Factura findByPagoId(Long pagoId) {
+        return facturaRepository.findByPagoId(pagoId);
+    }
 }

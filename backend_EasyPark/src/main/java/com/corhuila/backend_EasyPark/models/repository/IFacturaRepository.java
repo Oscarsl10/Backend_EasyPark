@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IFacturaRepository extends CrudRepository <Factura, Long> {
     List<Factura> findByStatusTrue();
+    List<Factura> findByRegistroVehiculoId(Long registroVehiculoId);
+    Factura findByPagoId(Long pagoId);
 }

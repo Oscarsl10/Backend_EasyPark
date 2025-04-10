@@ -15,4 +15,8 @@ public interface IFacturaService {
 
     public void delete(Long id);
 
+    public List<Factura> findByRegistroVehiculoId(Long id);
+
+    public Factura findByPagoId(Long pagoId);
+
 }

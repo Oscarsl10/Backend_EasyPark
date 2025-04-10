@@ -1,5 +1,6 @@
 package com.corhuila.backend_EasyPark.models.service;
 
+import com.corhuila.backend_EasyPark.models.entity.Factura;
 import com.corhuila.backend_EasyPark.models.entity.Pago;
 import com.corhuila.backend_EasyPark.models.repository.IPagoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ public class PagoServiceImpl implements IPagoService{
 
     @Autowired
     private IPagoRepository pagoRepository;
+    @Autowired
+    private IFacturaService facturaService;
 
     @Override
     @Transactional(readOnly = true)
@@ -28,10 +31,27 @@ public class PagoServiceImpl implements IPagoService{
         return (pago != null && Boolean.TRUE.equals(pago.getStatus())) ? pago : null;
     }
 
+    private static int contadorFactura = 1;
+
+    private int generarNumeroFactura() {
+        return contadorFactura++;
+    }
+
     @Override
     @Transactional
     public Pago save(Pago pago){
-        return pagoRepository.save(pago);
+        Pago pagoGuardado = pagoRepository.save(pago);
+
+        // 👇 Crear factura automáticamente después del pago
+        Factura factura = new Factura();
+        factura.setNumeroFactura(generarNumeroFactura());
+        factura.setFechaEmision(new Date());
+        factura.setPago(pagoGuardado);
+        factura.setRegistroVehiculo(pagoGuardado.getRegistroVehiculo());
+
+        facturaService.save(factura); // Guarda la factura
+
+        return pagoGuardado;
     }
 
     @Override
