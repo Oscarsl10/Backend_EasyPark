@@ -42,7 +42,7 @@ public class PagoServiceImpl implements IPagoService{
     public Pago save(Pago pago){
         Pago pagoGuardado = pagoRepository.save(pago);
 
-        // 👇 Crear factura automáticamente después del pago
+        // Crear factura automáticamente después del pago
         Factura factura = new Factura();
         factura.setNumeroFactura(generarNumeroFactura());
         factura.setFechaEmision(new Date());

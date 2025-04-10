@@ -2,29 +2,20 @@ package com.corhuila.backend_EasyPark.models.entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "tarifa")
-public class Tarifa implements Serializable {
+@Table(name = "tipo_tarifa")
+public class Tipo_tarifa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = (100), nullable = false)
-    private Double precio;
+    @Column(length = 250)
+    private String tipo_tarifa;
     @Column(name = "status")
     private Boolean status = true;
-
-    @ManyToOne
-    @JoinColumn(name = "tipo_vehiculo_id", nullable = false)
-    private Tipo_vehiculo tipo_vehiculo;
-
-    @ManyToOne
-    @JoinColumn(name = "tipo_tarifa_id")
-    private Tipo_tarifa tipo_tarifa;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_At")
@@ -63,12 +54,20 @@ public class Tarifa implements Serializable {
         this.id = id;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public String getTipo_tarifa() {
+        return tipo_tarifa;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setTipo_tarifa(String tipo_tarifa) {
+        this.tipo_tarifa = tipo_tarifa;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Date getCreated_At() {
@@ -93,29 +92,5 @@ public class Tarifa implements Serializable {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
-    }
-
-    public Tipo_vehiculo getTipo_vehiculo() {
-        return tipo_vehiculo;
-    }
-
-    public void setTipo_vehiculo(Tipo_vehiculo tipo_vehiculo) {
-        this.tipo_vehiculo = tipo_vehiculo;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public Tipo_tarifa getTipo_tarifa() {
-        return tipo_tarifa;
-    }
-
-    public void setTipo_tarifa(Tipo_tarifa tipo_tarifa) {
-        this.tipo_tarifa = tipo_tarifa;
     }
 }
