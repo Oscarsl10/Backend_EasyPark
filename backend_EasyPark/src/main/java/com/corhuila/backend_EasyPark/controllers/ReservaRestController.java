@@ -1,6 +1,7 @@
 package com.corhuila.backend_EasyPark.controllers;
 
 import com.corhuila.backend_EasyPark.models.entity.Reserva;
+import com.corhuila.backend_EasyPark.models.service.IEspacioTotalService;
 import com.corhuila.backend_EasyPark.models.service.IReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ public class ReservaRestController {
 
     @Autowired
     private IReservaService reservaService;
+    @Autowired
+    private IEspacioTotalService espacioTotalService;
 
     @GetMapping("/reserva")
     public List<Reserva> index(){
@@ -41,6 +44,10 @@ public class ReservaRestController {
         reservaActual.setFechaInicio(reserva.getFechaInicio());
         reservaActual.setFechaFin(reserva.getFechaFin());
         reservaActual.setPrecio(reserva.getPrecio());
+        reservaActual.setEspacio_total(reserva.getEspacio_total());
+        reservaActual.setUsers(reserva.getUsers());
+        reservaActual.setVehiculo(reserva.getVehiculo());
+        reservaActual.setTarifa(reserva.getTarifa());
         return reservaService.save(reservaActual);
     }
 
@@ -48,5 +55,6 @@ public class ReservaRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         reservaService.delete(id);
+        reservaService.restoreEspacios(id);  // Restaurar los espacios cuando se elimina la reserva
     }
 }

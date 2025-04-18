@@ -1,32 +1,28 @@
 package com.corhuila.backend_EasyPark.models.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "registroVehiculo")
-public class RegistroVehiculo {
+@Table(name = "espacio_total")
+public class EspacioTotal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = (10), nullable = false)
-    private String placa;
-    @Column(length = (100), nullable = false)
-    private String tipoVehiculo;
-    @Column(name = "Entrada")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "America/Bogota")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date entrada;
+    @Column(nullable = false)
+    private Integer espacio_total;
+
+    @Column(name = "descripcion", nullable = false, length = 250)
+    private String descripcion;
+
+    @Column(name = "disponibles")
+    private Integer disponibles;
+
     @Column(name = "status")
     private Boolean status = true;
-
-    @ManyToOne
-    @JoinColumn(name = "tarifa_id", nullable = false)
-    private Tarifa tarifa;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_At")
@@ -45,6 +41,10 @@ public class RegistroVehiculo {
         Date now = new Date();
         created_At = now;
         update_At = now;
+
+        if (disponibles == null) {
+            disponibles = espacio_total;
+        }
     }
 
     @PreUpdate
@@ -65,28 +65,12 @@ public class RegistroVehiculo {
         this.id = id;
     }
 
-    public String getPlaca() {
-        return placa;
+    public Integer getEspacio_total() {
+        return espacio_total;
     }
 
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public String getTipoVehiculo() {
-        return tipoVehiculo;
-    }
-
-    public void setTipoVehiculo(String tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
-    }
-
-    public Date getEntrada() {
-        return entrada;
-    }
-
-    public void setEntrada(Date entrada) {
-        this.entrada = entrada;
+    public void setEspacio_total(Integer espacio_total) {
+        this.espacio_total = espacio_total;
     }
 
     public Boolean getStatus() {
@@ -97,12 +81,12 @@ public class RegistroVehiculo {
         this.status = status;
     }
 
-    public Tarifa getTarifa() {
-        return tarifa;
+    public Date getUpdate_At() {
+        return update_At;
     }
 
-    public void setTarifa(Tarifa tarifa) {
-        this.tarifa = tarifa;
+    public void setUpdate_At(Date update_At) {
+        this.update_At = update_At;
     }
 
     public Date getCreated_At() {
@@ -113,19 +97,27 @@ public class RegistroVehiculo {
         this.created_At = created_At;
     }
 
-    public Date getUpdate_At() {
-        return update_At;
-    }
-
-    public void setUpdate_At(Date update_At) {
-        this.update_At = update_At;
-    }
-
     public Date getDeleted_At() {
         return deleted_At;
     }
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
+    }
+
+    public Integer getDisponibles() {
+        return disponibles != null ? disponibles : 0;
+    }
+
+    public void setDisponibles(Integer disponibles) {
+        this.disponibles = disponibles;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

@@ -1,5 +1,6 @@
 package com.corhuila.backend_EasyPark.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -12,19 +13,37 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Integer espacios; // Número de espacios reservados
+    @Column(columnDefinition = "INTEGER DEFAULT 1")
+    private Integer espacios = 1; // Número de espacios reservados
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "America/Bogota")
     @Column(nullable = false)
     private Date fechaInicio;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "America/Bogota")
     @Column(nullable = false)
     private Date fechaFin;
 
-    @Column(nullable = false)
+    @Column(name = "precio")
     private Double precio; // Costo total de la reserva
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users users;
+
+    @ManyToOne
+    @JoinColumn(name = "espacio_total_id", nullable = false)
+    private EspacioTotal espacio_total;
+
+    @ManyToOne
+    @JoinColumn(name = "vehiculo_id", nullable = false)
+    private Vehiculo vehiculo;
+
+    @ManyToOne
+    @JoinColumn(name = "tarifa_id", nullable = false)
+    private Tarifa tarifa;
 
     @Column(name = "status")
     private Boolean status = true;
@@ -58,13 +77,22 @@ public class Reserva {
         deleted_At = new Date();
     }
 
-    @ManyToOne
-    @JoinColumn(name = "vehiculo_id", nullable = false)
-    private Vehiculo vehiculo;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    public Double getPrecio() {
+        return precio = calcularValorAPagar();
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Integer getEspacios() {
         return espacios;
@@ -90,12 +118,20 @@ public class Reserva {
         this.fechaFin = fechaFin;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public EspacioTotal getEspacio_total() {
+        return espacio_total;
+    }
+
+    public void setEspacio_total(EspacioTotal espacio_total) {
+        this.espacio_total = espacio_total;
     }
 
     public Vehiculo getVehiculo() {
@@ -106,12 +142,20 @@ public class Reserva {
         this.vehiculo = vehiculo;
     }
 
-    public Users getUsers() {
-        return user;
+    public Tarifa getTarifa() {
+        return tarifa;
     }
 
-    public void setUsers(Users user) {
-        this.user = user;
+    public void setTarifa(Tarifa tarifa) {
+        this.tarifa = tarifa;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Date getCreated_At() {
@@ -122,12 +166,12 @@ public class Reserva {
         this.created_At = created_At;
     }
 
-    public Long getId() {
-        return id;
+    public Date getUpdate_At() {
+        return update_At;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUpdate_At(Date update_At) {
+        this.update_At = update_At;
     }
 
     public Date getDeleted_At() {
@@ -138,27 +182,36 @@ public class Reserva {
         this.deleted_At = deleted_At;
     }
 
-    public Date getUpdate_At() {
-        return update_At;
-    }
+    public double calcularValorAPagar() {
+        if (fechaInicio != null && fechaFin != null && tarifa != null && tarifa.getPrecio() != null) {
+            long diffInMillis = fechaFin.getTime() - fechaInicio.getTime();
+            long totalMinutes = diffInMillis / (1000 * 60);
+            long totalHours = totalMinutes / 60;
+            long remainingMinutes = totalMinutes % 60;
+            long totalDays = totalHours / 24;
+            long remainingHours = totalHours % 24;
 
-    public void setUpdate_At(Date update_At) {
-        this.update_At = update_At;
-    }
+            double precioBase = tarifa.getPrecio();
+            double totalPagar = 0.0;
 
-    public Users getUser() {
-        return user;
-    }
+            // Calcular días completos
+            totalPagar += totalDays * precioBase * 24;
 
-    public void setUser(Users user) {
-        this.user = user;
-    }
+            // Fracción de día
+            if (remainingHours > 0 || remainingMinutes > 0) {
+                double horasFinales = remainingHours;
 
-    public Boolean getStatus() {
-        return status;
-    }
+                if (remainingMinutes > 30) {
+                    horasFinales += 1;
+                } else if (remainingMinutes > 0) {
+                    horasFinales += 0.5;
+                }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+                totalPagar += horasFinales * precioBase;
+            }
+
+            return totalPagar;
+        }
+        return 0.0;
     }
 }

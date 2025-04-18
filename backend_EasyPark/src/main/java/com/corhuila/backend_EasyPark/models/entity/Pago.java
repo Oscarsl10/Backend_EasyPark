@@ -63,24 +63,13 @@ public class Pago implements Serializable {
         deleted_At = new Date();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getSalida() {
-        return salida;
-    }
-
-    public void setSalida(Date salida) {
-        this.salida = salida;
-    }
 
     public Double getValorAPagar() {
         return valorAPagar = calcularValorAPagar();
+    }
+
+    public void setValorAPagar(Double valorAPagar) {
+        this.valorAPagar = valorAPagar;
     }
 
     public double calcularValorAPagar() {
@@ -116,8 +105,28 @@ public class Pago implements Serializable {
         return 0.0;
     }
 
-    public void setValorAPagar(Double valorAPagar) {
-        this.valorAPagar = valorAPagar;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getSalida() {
+        return salida;
+    }
+
+    public void setSalida(Date salida) {
+        this.salida = salida;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public RegistroVehiculo getRegistroVehiculo() {
@@ -158,13 +167,5 @@ public class Pago implements Serializable {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
     }
 }

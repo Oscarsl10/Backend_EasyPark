@@ -13,4 +13,8 @@ public interface IReservaService {
     public Reserva save(Reserva reserva);
 
     public void delete(Long id);
+
+    public void restoreEspacios(Long id);
+
+    public void liberarEspaciosReservasExpiradas();
 }

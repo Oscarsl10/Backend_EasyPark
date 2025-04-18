@@ -3,8 +3,10 @@ INSERT INTO users (full_name, email, password, telefono) VALUES ("Pepe Gutierrez
 INSERT INTO admin (full_name, email, password, telefono) VALUES ("Admin", "admin@gmail.com", "e633f4fc79badea1dc5db970cf397c8248bac47cc3acf9915ba60b5d76b0e88f", "31111111")
 INSERT INTO tipo_vehiculo (tipo_vehiculo, status) VALUES ("Carro", true)
 INSERT INTO tipo_tarifa (tipo_tarifa, status) VALUES ("Prueba tarifa 1", true)
+INSERT INTO espacio_total (espacio_total, disponibles, descripcion, status) VALUES (50, 50, "Prueba", true)
 INSERT INTO tarifa (precio, tipo_tarifa_id, tipo_vehiculo_id, status) VALUES (1000, 1,  1, true)
 INSERT INTO vehiculo (placa, tipo_vehiculo, color, user_id, status) VALUES ("DUK-608", "Camioneta", "Gris","ogsierra@gmail.com", true)
 INSERT INTO registro_vehiculo (placa, tipo_vehiculo, entrada, tarifa_id, status) VALUES ("DUK-608", "Camioneta", "2025-04-08 16:31:00", 1, true)
 INSERT INTO pago (salida, tarifa_id, registro_vehiculo_id, status) VALUES ("2025-04-08 20:00:00", 1, 1, true)
-INSERT INTO factura (numero_factura	, fecha_emision, pago_id, registro_vehiculo_id, status) VALUES (135, '2025-03-18', 1, 1, true);
+INSERT INTO factura (numero_factura	, fecha_emision, pago_id, registro_vehiculo_id, status) VALUES (135, '2025-03-18', 1, 1, true)
+INSERT INTO reserva (espacio_total_id, fecha_inicio, fecha_fin, user_id, vehiculo_id, tarifa_id, status) VALUES (1, "2025-04-14 10:00:00", "2025-04-15 11:00:00", "ogsierra@gmail.com", 1, 1, true)

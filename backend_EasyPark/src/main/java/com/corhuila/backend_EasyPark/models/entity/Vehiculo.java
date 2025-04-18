@@ -53,7 +53,7 @@ public class Vehiculo implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false) // Clave foránea
-    private Users user;
+    private Users users;
 
 
     public Long getId() {
@@ -80,9 +80,9 @@ public class Vehiculo implements Serializable {
         this.tipoVehiculo = nit;
     }
 
-    public Users getUsers() { return user; }
+    public Users getUsers() { return users; }
 
-    public void setUsers(Users user) { this.user = user; }
+    public void setUsers(Users users) { this.users = users; }
 
     public Date getCreated_At() {
         return created_At;
@@ -106,14 +106,6 @@ public class Vehiculo implements Serializable {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
-    }
-
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
     }
 
     public String getColor() {
