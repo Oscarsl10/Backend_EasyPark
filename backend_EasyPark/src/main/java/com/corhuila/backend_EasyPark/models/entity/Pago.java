@@ -2,7 +2,6 @@ package com.corhuila.backend_EasyPark.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,6 +24,9 @@ public class Pago implements Serializable {
     private Double valorAPagar;
     @Column(name = "status")
     private Boolean status = true;
+
+    @Column(name = "metodo_pago")
+    private String metodoPago;
 
     @ManyToOne
     @JoinColumn(name = "registro_vehiculo_id", nullable = false)
@@ -167,5 +169,13 @@ public class Pago implements Serializable {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
+    }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
     }
 }

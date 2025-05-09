@@ -29,6 +29,9 @@ public class Reserva {
     @Column(name = "precio")
     private Double precio; // Costo total de la reserva
 
+    @Column(name = "confirmado")
+    private Boolean confirmado = false;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private Users users;
@@ -44,6 +47,10 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "tarifa_id", nullable = false)
     private Tarifa tarifa;
+
+    @ManyToOne
+    @JoinColumn(name = "pago_id")
+    private Pago pago;
 
     @Column(name = "status")
     private Boolean status = true;
@@ -180,6 +187,22 @@ public class Reserva {
 
     public void setDeleted_At(Date deleted_At) {
         this.deleted_At = deleted_At;
+    }
+
+    public Boolean getConfirmado() {
+        return confirmado;
+    }
+
+    public void setConfirmado(Boolean confirmado) {
+        this.confirmado = confirmado;
+    }
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
     }
 
     public double calcularValorAPagar() {

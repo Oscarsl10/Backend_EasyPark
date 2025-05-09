@@ -1,13 +1,16 @@
 package com.corhuila.backend_EasyPark.controllers;
 
 import com.corhuila.backend_EasyPark.models.entity.Reserva;
+import com.corhuila.backend_EasyPark.models.repository.IReservaRepository;
 import com.corhuila.backend_EasyPark.models.service.IEspacioTotalService;
 import com.corhuila.backend_EasyPark.models.service.IReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 
@@ -19,6 +22,8 @@ public class ReservaRestController {
     private IReservaService reservaService;
     @Autowired
     private IEspacioTotalService espacioTotalService;
+    @Autowired
+    private IReservaRepository reservaRepository;
 
     @GetMapping("/reserva")
     public List<Reserva> index(){
@@ -56,5 +61,27 @@ public class ReservaRestController {
     public void delete(@PathVariable Long id){
         reservaService.delete(id);
         reservaService.restoreEspacios(id);  // Restaurar los espacios cuando se elimina la reserva
+    }
+
+    @PutMapping("/confirmar/{id}")
+    public ResponseEntity<?> confirmarReserva(@PathVariable Long id) {
+        Optional<Reserva> reservaOpt = reservaRepository.findById(id);
+        if (reservaOpt.isEmpty()) return ResponseEntity.notFound().build();
+
+        Reserva reserva = reservaOpt.get();
+        reserva.setConfirmado(true);
+        reservaRepository.save(reserva);
+        return ResponseEntity.ok(reserva);
+    }
+
+    @GetMapping("/reserva-confirmada")
+    public List<Reserva> index(@RequestParam(required = false) String placa) {
+        if (placa != null && !placa.isEmpty()) {
+            // Filtrar por placa y solo reservas confirmadas
+            return reservaRepository.findByConfirmadoAndVehiculo_Placa(true, placa);
+        } else {
+            // Si no se proporciona placa, devolver todas las reservas confirmadas
+            return reservaRepository.findByConfirmado(true);
+        }
     }
 }

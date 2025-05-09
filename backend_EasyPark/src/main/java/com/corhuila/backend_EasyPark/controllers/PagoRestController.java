@@ -1,18 +1,12 @@
 package com.corhuila.backend_EasyPark.controllers;
 
-import com.corhuila.backend_EasyPark.models.entity.Factura;
 import com.corhuila.backend_EasyPark.models.entity.Pago;
-import com.corhuila.backend_EasyPark.models.entity.RegistroVehiculo;
-import com.corhuila.backend_EasyPark.models.service.IFacturaService;
 import com.corhuila.backend_EasyPark.models.service.IPagoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 
@@ -46,6 +40,7 @@ public class PagoRestController {
         pagoActual.setSalida(pago.getSalida());
         pagoActual.setRegistroVehiculo(pago.getRegistroVehiculo());
         pagoActual.setTarifa(pago.getTarifa());
+        pagoActual.setMetodoPago(pago.getMetodoPago());
         return pagoService.save(pagoActual);
     }
 
