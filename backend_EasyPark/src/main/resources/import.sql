@@ -10,3 +10,4 @@ INSERT INTO registro_vehiculo (placa, tipo_vehiculo, entrada, tarifa_id, status)
 
 INSERT INTO factura (numero_factura	, fecha_emision, pago_id, registro_vehiculo_id, status) VALUES (135, '2025-03-18', 1, 1, true)
 INSERT INTO reserva (espacio_total_id, fecha_inicio, fecha_fin, user_id, vehiculo_id, tarifa_id, status) VALUES (1, "2025-04-14 10:00:00", "2025-04-15 11:00:00", "ogsierra@gmail.com", 1, 1, true)
+INSERT INTO calificacion (calificacion, comentario, user_id, status) VALUES ("5", "SS", "pepe@gmail.com", true)
